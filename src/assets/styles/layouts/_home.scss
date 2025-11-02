@@ -166,6 +166,7 @@ Hero
     text-decoration: none;
     background-color: vars.$color-accent;
     border-radius: 0.5rem;
+    font-weight: bold;
 
     &:hover {
       background-color: lighten-color(vars.$color-accent, 15%);
@@ -235,7 +236,7 @@ Gameplay
     &__feature {
       flex: 1;
       padding: 1rem;
-      background-color: lighten-color(vars.$color-bg, 5%);
+      background-color: lighten-color(vars.$color-primary, 80%);
       border-radius: 0.5rem;
 
       &-title {
