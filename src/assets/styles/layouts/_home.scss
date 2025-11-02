@@ -1,59 +1,275 @@
-@use "../variables";
+@use "../variables" as vars;
+@use "sass:color";
 
+/* ------------------------------
+Funciones
+--------------------------------- */
+@function darken-color($color, $amount) {
+  $negative-amount: -1 * $amount;
+  @return color.adjust($color, $lightness: $negative-amount);
+}
+
+@function lighten-color($color, $amount) {
+  @return color.adjust($color, $lightness: $amount);
+}
+
+/* ------------------------------
+Reseteo y general
+--------------------------------- */
 * {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 body {
+  font-family: vars.$font-family-sans;
+  line-height: 1.5;
+  color: vars.$color-primary;
+  background-color: vars.$color-bg;
+}
+
+/* ------------------------------
+Contenedor principal
+--------------------------------- */
+.page__content {
+  max-width: vars.$container-max-width;
+  padding: 2rem;
+  margin: 0 auto;
+}
+
+/* ------------------------------
+Secciones
+--------------------------------- */
+.section {
+  padding: 2rem;
+
+  &__title {
+    margin-bottom: 1rem;
+    font-family: vars.$font-family-serif;
+    font-size: 1.75rem;
+  }
+
+  &__text {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+}
+
+/* ------------------------------
+Header
+--------------------------------- */
+.header {
+  padding: 1.5rem;
+  color: vars.$color-bg;
+  background-color: vars.$color-primary;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  &__logo {
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 1rem;
+
+    @media (min-width: vars.$mq-md) {
+      margin-bottom: 0;
+    }
+  }
+
+  &__subtitle {
+    font-size: 1rem;
+    color: lighten-color(vars.$color-bg, 20%);
+  }
+
+  .nav {
+    margin-top: 1rem;
+
+    &__list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      list-style: none;
+    }
+
+    &__link {
+      font-weight: bold;
+      color: vars.$color-bg;
+      text-decoration: none;
+
+      &:hover {
+        color: vars.$color-accent;
+      }
+    }
+  }
+}
+
+/* ------------------------------
+Hero
+--------------------------------- */
+.hero {
+  position: relative;
+  padding: 4rem 2rem;
+  text-align: center;
+  background-image: url("../images/hero-bg.png");
+  background-position: center;
+  background-size: cover;
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: rgb(0 0 0 / 0.4);
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  &__title {
+    margin-bottom: 1rem;
+    font-family: vars.$font-family-serif;
+    font-size: 2.5rem;
+    color: vars.$color-bg;
+  }
+
+  @media (min-width: vars.$mq-md) {
+    .hero__title {
+      font-size: 3rem;
+    }
+  }
+
+  @media (min-width: vars.$mq-lg) {
+    .hero__title {
+      font-size: 3.5rem;
+    }
+  }
+
+  &__text {
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    color: vars.$color-bg;
+  }
+
+  &__btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    color: vars.$color-primary;
+    text-decoration: none;
+    background-color: vars.$color-accent;
+    border-radius: 0.5rem;
+
+    &:hover {
+      background-color: lighten-color(vars.$color-accent, 15%);
+    }
+  }
+}
+
+/* ------------------------------
+Personajes
+--------------------------------- */
+.characters {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  padding: 2rem;
-  margin: 0;
-  font-family: variables.$font-family-sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  color: variables.$uoc-corporate;
-  background-color: variables.$uoc-bg;
-}
+  gap: 2rem;
 
-.uoc-container {
-  max-width: 800px;
-  padding: 2rem;
-  margin: auto;
-  text-align: center;
-  background-color: #fff;
-  border-radius: 2rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
+  @media (min-width: vars.$mq-md) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 
-.uoc-logo {
-  display: block;
-  max-width: 200px;
-  height: auto;
-  margin-right: auto;
-  margin-bottom: 1.5rem;
-  margin-left: auto;
+  .character {
+    flex: 1;
+    padding: 1rem;
+    text-align: center;
+    background-color: lighten-color(vars.$color-primary, 80%);
+    border-radius: 0.5rem;
 
-  @media (min-width: variables.$mqMinWidth) {
-    max-width: none;
+    &__img {
+      max-width: 150px;
+      height: auto;
+      margin: 0 auto 1rem auto;
+      border-radius: 0.25rem;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.15);
+
+      @media (min-width: vars.$mq-md) {
+        max-width: 250px;
+        ;
+      }
+    }
+
+    &__name {
+      margin-bottom: 0.5rem;
+      font-family: vars.$font-family-serif;
+      font-size: 1.25rem;
+    }
+
+    &__bio {
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
   }
 }
 
-.uoc-title {
-  font-family: variables.$font-family-serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: variables.$uoc-corporate;
+/* ------------------------------
+Gameplay
+--------------------------------- */
+.gameplay {
+  &__features {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 
-  @media (min-width: variables.$mqMinWidth) {
-    font-size: 36px;
+    @media (min-width: vars.$mq-md) {
+      flex-direction: row;
+    }
+
+    &__feature {
+      flex: 1;
+      padding: 1rem;
+      background-color: lighten-color(vars.$color-bg, 5%);
+      border-radius: 0.5rem;
+
+      &-title {
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+      }
+
+      &-text {
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+    }
   }
 }
 
-.uoc-footer {
-  margin-top: 1.5rem;
-  font-size: 0.75rem;
+/* ------------------------------
+Footer
+--------------------------------- */
+.page__footer {
+  padding: 2rem;
+  font-size: 0.8rem;
+  color: vars.$color-primary;
   text-align: center;
+  background-color: darken-color(vars.$color-bg, 5%);
+
+  p {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+
+    i {
+      color: vars.$color-accent;
+    }
+  }
 }
